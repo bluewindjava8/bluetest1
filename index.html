@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Deep Linking Example (Single File)</title>
+
+    <style>
+        /* --- style.css content starts here --- */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* In case you make it an <a> tag later */
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .status-message {
+            margin-top: 25px;
+            font-weight: bold;
+            color: #dc3545; /* Default to error color */
+        }
+
+        .debug-info {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 20px;
+            white-space: pre-wrap; /* Preserve formatting for user agent */
+            text-align: left;
+        }
+        /* --- style.css content ends here --- */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>App Deep Linking Demo</h1>
+        <p>Click the button below to try opening "MyAwesomeApp".</p>
+        <button id="openAppButton" class="btn">Open MyAwesomeApp</button>
+        <p class="status-message" id="statusMessage"></p>
+        <p class="debug-info" id="debugInfo"></p>
+    </div>
+
+    <script>
+        /* --- MobileDetect.js content starts here (v1.4.5, minified) --- */
+        /*
+         * MobileDetect.js
+         * Copyright (c) 2012-2019 Serban Ghita <serbanghita@gmail.com>
+         *
+         * Licensed under the MIT License
+         *
+         * @license MIT
+         */
+        !function(e){"use strict";function n(e){return n.prototype.hasOwnProperty(e)}function i(e,n){for(var i in n)e[i]=n[i]}function t(e,n){this.options={},this.ua=e,this.init(e,n)}var r=/Mobile|Tablet|iPad|iPhone|Android|BlackBerry|Windows Phone|Kindle|Opera Mini|Silk|BB/i;t.prototype={init:function(e,n){if(e=e||"","object"==typeof e&&(n=e,e=null),this.options={},i(this.options,t.options),i(this.options,n),this.ua=e||navigator.userAgent,window.navigator&&window.navigator.userAgent)for(var a in t.userAgents)if(t.userAgents.hasOwnProperty(a)&&(t.userAgents[a]=t.userAgents[a].toString().replace("#v",""))){var s=t.userAgents[a].split("|");for(var o in s)s.hasOwnProperty(o)&&(t.userAgents[a+"|"+s[o]]="/"+s[o].replace(" ",".")+"/i")}for(var u in t.properties)if(t.properties.hasOwnProperty(u)&&(t.properties[u]=t.properties[u].toString().replace("#v",""))){var d=t.properties[u].split("|");for(var c in d)d.hasOwnProperty(c)&&(t.properties[u+"|"+d[c]]="/"+d[c].replace(" ",".")+"/i")}for(var h in t.utilities)t.utilities.hasOwnProperty(h)&&(t.utilities[h]=t.utilities[h].toString().replace("#v",""))},is:function(e){var n=t.detectors.os.hasOwnProperty(e)?t.detectors.os[e]:null,i=t.detectors.mobile.hasOwnProperty(e)?t.detectors.mobile[e]:null,a=t.detectors.tablet.hasOwnProperty(e)?t.detectors.tablet[e]:null,s=t.detectors.utility.hasOwnProperty(e)?t.detectors.utility[e]:null;if(a&&a.test(this.ua))return!0;if(i&&i.test(this.ua))return!0;if(n&&n.test(this.ua))return!0;if(s&&s.test(this.ua))return!0;if("Presto"===e&&this.ua.indexOf("Presto")>-1)return!0;if("Trident"===e&&this.ua.indexOf("Trident")>-1)return!0;if("Gecko"===e&&this.ua.indexOf("Gecko")>-1)return!0;if("WebKit"===e&&this.ua.indexOf("WebKit")>-1)return!0;if(t.userAgents.hasOwnProperty(e)){var o=new RegExp(t.userAgents[e],"i");return o.test(this.ua)}return!1},version:function(e){var n=t.properties.hasOwnProperty(e)?t.properties[e]:null;if(n){var i=new RegExp(n,"i"),a=this.ua.match(i);if(a&&a.length>1){var s=a[1].replace(/_/g,".");return parseFloat(s)}}return!1},versionStr:function(e){var n=t.properties.hasOwnProperty(e)?t.properties[e]:null;if(n){var i=new RegExp(n,"i"),a=this.ua.match(i);if(a&&a.length>1)return a[1].replace(/_/g,".")}return!1},match:function(e){var n=t.detectors.os.hasOwnProperty(e)?t.detectors.os[e]:null,i=t.detectors.mobile.hasOwnProperty(e)?t.detectors.mobile[e]:null,a=t.detectors.tablet.hasOwnProperty(e)?t.detectors.tablet[e]:null,s=t.detectors.utility.hasOwnProperty(e)?t.detectors.utility[e]:null;return a&&a.test(this.ua)?a.exec(this.ua):i&&i.test(this.ua)?i.exec(this.ua):n&&n.test(this.ua)?n.exec(this.ua):s&&s.test(this.ua)?s.exec(this.ua):void 0},mobile:function(){return r.test(this.ua)},tablet:function(){return this.is("Tablet")},phone:function(){return!this.tablet()&&this.mobile()},useragent:function(){return this.ua},os:function(){var e=["iOS","AndroidOS","BlackBerryOS","WindowsPhoneOS","webOS","FirefoxOS","MeeGoOS","MaemoOS","JavaOS","SailfishOS","TizenOS","UbuntuOS","BadaOS","RIMOS","SymbianOS"];for(var n in e)if(e.hasOwnProperty(n)&&this.is(e[n]))return e[n];return!1},osVersion:function(){var e=this.os();return this.version(e)},grade:function(){var e=this.os();return"iOS"===e||"AndroidOS"===e?this.version(e)>=4.1?"A":"B":this.is("WindowsPhoneOS")?"A":"C"},setUa:function(e){this.ua=e},setDetectors:function(e){i(t.detectors,e)},getDetectors:function(){return t.detectors}},t.options={},t.detectors={fullBrowser:new RegExp(t.ua)},t.userAgents={WebKit:"WebKit",Gecko:"Gecko",Trident:"Trident",Presto:"Presto",KHTML:"KHTML",MSIE:"MSIE",MSOffice:"MSOffice",Opera:"Opera",Chrome:"Chrome",Safari:"Safari",Firefox:"Firefox",Silk:"Silk",webOSBrowser:"webOSBrowser",BlackBerry:"BlackBerry",Android:"Android",UCBrowser:"UCBrowser",Puffin:"Puffin",Edge:"Edge",SamsungBrowser:"SamsungBrowser",CriOS:"CriOS",FirefoxiOS:"FirefoxiOS",Chromium:"Chromium",Vivaldi:"Vivaldi"},t.properties={MobileDetectVersion:"MobileDetect",MobileBuild:"Build",Version:"Version",VendorID:"VendorID",Safari:"Version",Chrome:"Chrome",Firefox:"Firefox",MSIE:"MSIE",MSOffice:"MSOffice",Opera:"Version",BlackBerry:"Version",Android:"Android",iPad:"Version",iPhone:"Version",iPod:"Version",Kindle:"Version",Silk:"Silk",BlackBerryPlayBook:"Version",PSP:"PSP",Xbox:"Xbox",Zune:"Zune",webOSBrowser:"Version",UCBrowser:"UCBrowser",Puffin:"Puffin",Edge:"Edge",SamsungBrowser:"Version",CriOS:"CriOS",FirefoxiOS:"FirefoxiOS",Chromium:"Chromium",Vivaldi:"Vivaldi",iOS:"OS #v",iPhoneOS:"iPhone OS #v",iPadOS:"iPad OS #v",tvOS:"tvOS #v",AndroidOS:"Android #v",BlackBerryOS:"BlackBerry #v",WindowsPhoneOS:"Windows Phone OS #v",webOS:"webOS/#v",FirefoxOS:"Firefox OS #v",MeeGoOS:"MeeGo",MaemoOS:"Maemo",JavaOS:"JavaOS",SailfishOS:"SailfishOS",TizenOS:"Tizen",UbuntuOS:"Ubuntu",BadaOS:"Bada",RIMOS:"RIMOS",SymbianOS:"SymbianOS"},t.utilities={Bot:"Bot|Spider|Crawler|bot|spider|crawler",MobileBot:"(Googlebot|AdsBot|Mediapartners-Google)|(bot|spider|crawler|Googlebot-Mobile)|YahooSeeker|bingbot",DesktopMode:"DesktopMode",TV:"TV|(SMART-TV)|hbbtv|Opera TV|NetCast|Panasonic Smart TV|Samsung SmartTV",WebKit:"WebKit/(.*?)",Gecko:"Gecko",Trident:"Trident/(.*?);",Presto:"Presto/(.*?)"},t.detectors.os={Win:["Windows NT","Windows"],iOS:"(iPad|iPhone|iPod)",iPad:"iPad",iPhone:"iPhone",iPod:"iPod",AndroidOS:"Android",BlackBerryOS:"BlackBerry",WindowsPhoneOS:"Windows Phone",webOS:"(webOS|hpwOS)",FirefoxOS:"Firefox OS",MeeGoOS:"MeeGo",MaemoOS:"Maemo",JavaOS:"(Java; U; |MIDP-)",SailfishOS:"SailfishOS",TizenOS:"Tizen",UbuntuOS:"Ubuntu",BadaOS:"Bada",RIMOS:"RIMOS",SymbianOS:"SymbianOS"},t.detectors.mobile={Mobile:["Mobile"],iPad:"iPad",iPhone:"iPhone",iPod:"iPod",BlackBerry:"BlackBerry",Android:"Android",WindowsPhone:"Windows Phone",Kindle:"Kindle",OperaMini:"Opera Mini",Silk:"Silk",webOS:"(webOS|hpwOS)"},t.detectors.tablet={Tablet:["(Tablet|iPad|PlayBook)"],BlackBerryPlayBook:"(PlayBook)",KindleFire:"(Kindle Fire)",Silk:"(Silk)",iPad:"(iPad)"},t.detectors.utility={Bot:"Bot|Spider|Crawler|bot|spider|crawler",MobileBot:"(Googlebot|AdsBot|Mediapartners-Google)|(bot|spider|crawler|Googlebot-Mobile)|YahooSeeker|bingbot",DesktopMode:"DesktopMode",TV:"TV|(SMART-TV)|hbbtv|Opera TV|NetCast|Panasonic Smart TV|Samsung SmartTV"},"undefined"!=typeof module&&module.exports?module.exports=t:"function"==typeof define&&define.amd?define(function(){return t}):e.MobileDetect=t}(this);
+        /* --- MobileDetect.js content ends here --- */
+
+        /* --- script.js content starts here --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const openAppButton = document.getElementById('openAppButton');
+            const statusMessage = document.getElementById('statusMessage');
+            const debugInfo = document.getElementById('debugInfo');
+
+            // Initialize MobileDetect.js with the current user agent
+            let md = new MobileDetect(window.navigator.userAgent);
+
+            // --- Define your app's deep link and fallback URLs ---
+            // IMPORTANT: Replace these with your actual app details
+            const APP_SCHEME = 'myawesomeapp://'; // Example: your-app-scheme://
+            const ANDROID_PACKAGE_NAME = 'com.example.myawesomeapp'; // Your Android app's package name
+            const ANDROID_FALLBACK_URL = 'https://play.google.com/store/apps/details?id=' + ANDROID_PACKAGE_NAME; // Link to Google Play Store
+            const IOS_APP_STORE_ID = '123456789'; // Replace with your actual App Store ID (the numbers in the App Store URL)
+            const IOS_FALLBACK_URL = 'https://apps.apple.com/us/app/id' + IOS_APP_STORE_ID; // Link to Apple App Store
+
+            let osType = "Unknown";
+            let deepLinkUrl = "";
+            let fallbackUrl = "";
+
+            // Determine OS and set appropriate URLs
+            if (md.is('iOS')) {
+                osType = "iOS";
+                deepLinkUrl = APP_SCHEME + 'open'; // Example: myawesomeapp://open
+                fallbackUrl = IOS_FALLBACK_URL;
+                statusMessage.style.color = '#007bff'; // Blue for iOS
+                statusMessage.textContent = `Detected OS: ${osType}. Using iOS deep link.`;
+            } else if (md.is('AndroidOS')) {
+                osType = "Android";
+                // Android Intent URL structure
+                deepLinkUrl = `intent://open#Intent;scheme=${APP_SCHEME.replace('://', '')};package=${ANDROID_PACKAGE_NAME};end`;
+                fallbackUrl = ANDROID_FALLBACK_URL;
+                statusMessage.style.color = '#388E3C'; // Green for Android
+                statusMessage.textContent = `Detected OS: ${osType}. Using Android Intent URL.`;
+            } else {
+                osType = "Desktop/Other";
+                deepLinkUrl = 'javascript:void(0)'; // No deep link for desktop directly
+                fallbackUrl = 'https://www.yourwebapp.com/download'; // Generic download page or your website
+                statusMessage.style.color = '#FBC02D'; // Yellow for others
+                statusMessage.textContent = `Detected OS: ${osType}. Direct app deep linking is not typically supported on desktop.`;
+                openAppButton.disabled = true;
+                openAppButton.textContent = "Not available on desktop";
+            }
+
+            // Display debug information
+            debugInfo.innerHTML = `
+                <strong>User Agent:</strong> ${window.navigator.userAgent}<br>
+                <strong>Detected OS:</strong> ${osType}<br>
+                <strong>Deep Link URL:</strong> ${deepLinkUrl}<br>
+                <strong>Fallback URL:</strong> ${fallbackUrl}
+            `;
+
+            openAppButton.addEventListener('click', () => {
+                if (osType === "Desktop/Other") {
+                    // For desktop, simply open the fallback URL (e.g., download page)
+                    window.open(fallbackUrl, '_blank');
+                    return;
+                }
+
+                // Attempt to open the deep link
+                const startAttemptTime = Date.now();
+                window.location.href = deepLinkUrl;
+
+                // Fallback mechanism: If the app doesn't take over within a short time,
+                // it likely failed to open, so redirect to the app store.
+                // Note: This is a heuristic and can be unreliable, especially on iOS Safari.
+                // For iOS, Universal Links are the recommended approach for robust deep linking.
+                setTimeout(() => {
+                    // If the deep link didn't redirect the browser away, this code will execute
+                    if (Date.now() - startAttemptTime < 2000) { // If less than 2 seconds passed, app likely didn't open
+                        statusMessage.textContent = `App didn't open, redirecting to store...`;
+                        statusMessage.style.color = '#dc3545'; // Red for error
+                        window.location.href = fallbackUrl;
+                    } else {
+                        statusMessage.textContent = `App might have opened successfully!`;
+                        statusMessage.style.color = '#28a745'; // Green for success
+                    }
+                }, 1500); // Give the app 1.5 seconds to open
+            });
+        });
+        /* --- script.js content ends here --- */
+    </script>
+</body>
+</html>
